@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f1cad02f-a310-4522-b813-2790de6888b0" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="1gyxIBouUYFB3gUm4t9TsSORLih" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/JYH/autoworkproject" />
+  </component>
+  <component name="RunManager">
+    <configuration name="localwork" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="OAclient" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/usr/bin/python3.6" />
+      <option name="WORKING_DIRECTORY" value="$USER_HOME$/JYH/autoworkproject/autowork/code" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="false" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$USER_HOME$/JYH/autoworkproject/autowork/code/localwork.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.localwork" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f1cad02f-a310-4522-b813-2790de6888b0" name="Default Changelist" comment="" />
+      <created>1599986178055</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1599986178055</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="450" y="133" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599990194058">
+      <screen x="67" y="27" width="1851" height="899" />
+    </state>
+    <state x="450" y="133" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1851.899@67.27.1851.899" timestamp="1599990194058" />
+    <state x="91" y="28" width="649" height="872" key="#localwork" timestamp="1599990355790">
+      <screen x="67" y="27" width="1851" height="899" />
+    </state>
+    <state x="91" y="28" width="649" height="872" key="#localwork/67.27.1851.899@67.27.1851.899" timestamp="1599990355790" />
+    <state x="716" y="203" key="FileChooserDialogImpl" timestamp="1599990102024">
+      <screen x="67" y="27" width="1851" height="899" />
+    </state>
+    <state x="716" y="183" key="FileChooserDialogImpl/67.27.1851.799@67.27.1851.799" timestamp="1599986183617" />
+    <state x="716" y="203" key="FileChooserDialogImpl/67.27.1851.899@67.27.1851.899" timestamp="1599990102024" />
+    <state width="1825" height="225" key="GridCell.Tab.0.bottom" timestamp="1599990783169">
+      <screen x="67" y="27" width="1851" height="899" />
+    </state>
+    <state width="1825" height="225" key="GridCell.Tab.0.bottom/67.27.1851.899@67.27.1851.899" timestamp="1599990783169" />
+    <state width="1825" height="225" key="GridCell.Tab.0.center" timestamp="1599990783168">
+      <screen x="67" y="27" width="1851" height="899" />
+    </state>
+    <state width="1825" height="225" key="GridCell.Tab.0.center/67.27.1851.899@67.27.1851.899" timestamp="1599990783168" />
+    <state width="1825" height="225" key="GridCell.Tab.0.left" timestamp="1599990783168">
+      <screen x="67" y="27" width="1851" height="899" />
+    </state>
+    <state width="1825" height="225" key="GridCell.Tab.0.left/67.27.1851.899@67.27.1851.899" timestamp="1599990783168" />
+    <state width="1825" height="225" key="GridCell.Tab.0.right" timestamp="1599990783169">
+      <screen x="67" y="27" width="1851" height="899" />
+    </state>
+    <state width="1825" height="225" key="GridCell.Tab.0.right/67.27.1851.899@67.27.1851.899" timestamp="1599990783169" />
+  </component>
+</project>

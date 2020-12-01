@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 引用外部css文件 -->
+    <link rel="stylesheet" href="static/css/excel.css">
+</head>
+<body>
+<form method="post" action="http://127.0.0.1:8000/users/upload_file/" enctype="multipart/form-data">
+        {% csrf_token %}
+    <header>
+        <!-- 导航栏 -->
+        <nav>
+            <!-- logo -->
+            <h1 class="logo">
+                <a href="#">EXCEL处理</a>
+            </h1>
+            <!-- 导航菜单 -->
+            <ul>
+                <li>
+                    <a href="file_convertings.html">EXCEL转换</a>
+                </li>
+                <li>
+                    <a href="file_data_processings.html">多文件处理</a>
+                </li>
+                <li>
+                    <a href="file_watermarks.html">添加水印</a>
+                </li>
+            </ul>
+            <!-- 登录注册 -->
+            <div>
+                <a href="#" id="register">注册</a>
+                <a href="#" id="login">登录</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div id="dndArea" class="placeholder">
+                <div class="file-pick">点击选择文件</div>
+            请上传文件<input type="file" name="files">
+            <input type="submit" value="上传">
+                <p class="area-operation-tips">
+                请上传需要转换的Excel文件<br>
+                支持<span class="warn-cxt">XLSX,XLS</span>格式</p>
+        </div>
+    </main>
+    <footer>
+        
+    </footer>
+</form>
+</body>
+</html>

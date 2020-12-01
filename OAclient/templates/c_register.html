@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<!--
+author:jiayuhao
+date:2020-09
+desc:this demo is about blog. PLEASE NOTE:If you have trouble running it ,try any of the other demos or connect with auther.
+Any individuals and organizations and not for commercial use, professiona website for customized web site.
+-->
+<head>
+		<meta charset="utf-8">
+		<link href="../static/css/login_reglogin.css" rel='stylesheet' type='text/css' />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="../static/js/jquery.min.js" type="text/javascript"></script>
+        <title>企业注册</title>
+</head>
+<body>
+		<div class="bg">
+				<img src="../static/images/register_bg.jpg" alt="">
+		</div>
+
+	<div id='test'></div>
+
+	<div class="main">
+		<div class="header" >
+			<h1>创建一个新企业账户！</h1>
+		</div>
+		<p></p>
+				<ul class="left-form"><span class="pull-right">已有帐号？<a href="/c_login">点此登录</a></span>
+					<h2>新账户:</h2>
+					<li>
+            <input type="text" class="c_name" name="c_name" placeholder="请输入企业名" required maxlength="11"/>
+						<div class="clear"> </div>
+					</li> 
+					<li>
+            <input type="email" class="email" name="email" placeholder="请输入企业邮箱" required />
+						<div class="clear"> </div>
+					</li> 
+
+					<li>
+            <input type="phone" class="phone" name="phone" placeholder="请输手机号" required/>
+						 <input type="button" id="sms"  onclick="sendSMS();settime(this)" value="免费获取验证码">
+						<div class="clear"> </div>
+					</li> 
+					<li>
+            <input type="sms_num" class="sms_num" name="sms_num" placeholder="请输入验证码" required />
+						<div class="clear"> </div>
+
+			<li>
+            <input type="password" class="password_1" name="password_1" placeholder="请输入密码" required minlength="6" maxlength="11"/>
+						<div class="clear"> </div>
+            </li>
+            <li>
+              <input type="password" class="password_2" name="password_2" placeholder="请再次确认密码" required minlength="6" maxlength="11"/>
+              <div class="clear"> </div>
+            </li>
+            <li style="border:none">
+				<input type="button" value="创建并登录" onclick="regist()">
+            </li>
+				</ul>
+				<div class="clear"> </div>
+	</div>
+</body>
+
+
+    <script>
+        function getQueryVariable(variable)
+        {
+            var query = window.location.search.substring(1);
+            var vars = query.split("&");
+            for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+            }
+            return null;
+        }
+
+
+	var countdown=60;
+	function settime(obj) {
+    	if (countdown == 0) {
+        	obj.removeAttribute("disabled");
+        	obj.value="免费获取验证码";
+			countdown = 60;
+        	return;
+    	} else {
+        	obj.setAttribute("disabled", true);
+        	obj.value="重新发送(" + countdown + ")";
+        	countdown--;
+    	}
+		setTimeout(function() {
+    		settime(obj) }
+    	,1000)
+	}
+	function regist(){
+		var c_name = $('.c_name').val();
+		var email = $('.email').val();
+		var password_1 = $('.password_1').val();
+		var password_2 = $('.password_2').val();
+		var phone = $('.phone').val();
+		var sms_num = $('.sms_num').val();
+		var post_data={"c_name":c_name,"email":email,"password_1":password_1,"password_2":password_2,"phone":phone,'sms_num':sms_num};
+		console.log(post_data);
+		$.ajax({
+			url:'http://127.0.0.1:8000/v1/companys',
+			type:'POST',
+			dataType:'json',  //8000服务器返回的数据类型
+			data:JSON.stringify(post_data), //将json对象转换为json字符串
+			contentType:'application/json', //请求头 告知服务器为json数据提交
+			success:function(res){   //成功收到服务器数据后，自动将json串转为json对象
+				// alert('success'+res.code)	
+				if(res.code==200){
+					alert('注册成功')
+					// 将后端返回的数据 c_name 和 token 保存到浏览器的本地存储
+					window.localStorage.setItem('dnblog_token',res.data.token)
+					window.localStorage.setItem('dnblog_user',res.c_name)
+					window.localStorage.setItem('dnblog_email',res.email)
+					// 跳转到企业显示页
+					window.location ='/'+res.email+'/users_show/';
+
+				}else{
+					alert(res.error)
+				}
+
+			}
+		})
+	}
+	function sendSMS(){
+		var  phone = $('.phone').val()
+		var  post_data = {'phone':phone}
+		console.log(post_data)
+		// post-> http://127.0.0.1:8000/v1/companys/sms
+		$.ajax({
+			url:'http://127.0.0.1:8000/v1/companys/sms',
+			type:'post',
+			data:JSON.stringify(post_data),
+			contentType:'application/json',
+			dataType:'json',
+			success:function(res){
+				if(res.code ==200){
+					alert('短信已发送请查收')
+				}else{
+					alert(res.error)
+				}
+
+			}
+		})
+
+	}
+
+    </script>
+
+
+</html>

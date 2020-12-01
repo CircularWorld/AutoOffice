@@ -1,0 +1,277 @@
+/* 初始化页面样式  去掉元素的默认样式 */
+body,ul,ol,li,h1,h2,h3,p{
+    margin: 0;
+    padding: 0;
+}
+ul,ol{
+    list-style: none;/*去掉列表默认样式*/
+}
+a{
+    text-decoration: none;/*去掉下划线*/
+}
+
+#rig{
+    border:0;
+    width:75px;
+    height:75px;
+    position:absolute;
+    right:0;
+    bottom:225px;
+    background: url(../images/22.jpg);
+}
+
+/* header部分 */
+header{
+    width: 100%;
+    background-color: #555;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+}
+/* 导航条部分 */
+nav{
+    width: 1140px;
+    height: 80px;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* logo文字 */
+/* 
+    h1
+    能和其他元素并排显示
+    字体垂直居中
+    字体大小26px
+    距离右侧元素80px
+    h1 a
+    字体颜色 #c1edf2
+*/
+header nav h1{
+    float: left;
+    line-height: 80px;
+    font-size: 26px;
+    margin-right: 80px;
+}
+header nav h1 a{
+    color:#c1edf2;
+}
+/* 导航菜单 */
+/* 实现导航菜单 水平排列  垂直居中 */
+/* ul li a  字体颜色  #e5f2f2 */
+/* 超链接鼠标移入变成白色 */
+header nav ul li{
+    float: left;
+    line-height: 80px;
+    padding: 0 20px;
+}
+header nav ul li a{
+    color: #fff;
+}
+header nav ul li a:hover{
+    color:#000;
+}
+#search{
+    right:200px;
+}
+
+/* 登录注册 */
+/* 绝对定位  相对nav调整位置 */
+/* 登录距离nav右侧70px    注册距离nav右侧0px */
+header nav div {
+    position: absolute;
+    line-height: 75px;
+    color: #e5f2f2;
+    right:100px;
+}
+
+#register{
+    
+    font-size: 25px;
+    
+}
+#login{
+   
+    font-size: 25px;
+    
+}
+
+/* 主体样式 */
+/* header{
+    top:0
+} */
+main{
+    width: 1140px;
+    /* 为header的固定定位留出空间 */
+    margin: 100px auto 0;
+}
+form{
+    position:absolute;
+    width:100px;
+    height:200px;
+    right:100px;
+}
+/* .banner 占父元素的66% */
+/* 实现页面效果 */
+.banner{
+    width: 66%;
+    float: left;
+}
+.fader{
+    position: relative;
+    width: 100%;
+    /* padding-top:60% ; */
+}
+.fader .slide{
+    width: 100%;
+    height: 100%;
+}
+.fader .slide img{
+    width: 100%;
+    height: 100%;
+}
+.fader .slide .imginfo{
+    width: 100%;
+    position: absolute;
+    bottom:12%;
+    color: #fff;
+    font-size: 26px;
+    background-color: rgba(224, 11, 11, 0.4);
+    padding-left:40px;
+    box-sizing: border-box;
+}
+
+.fader  .fader_controls div{
+    position: absolute;
+    top:50%;
+    width: 50px;
+    height: 80px;
+    text-align: center;
+    line-height: 80px;
+    font-size: 100px;
+    margin-top: -40px;
+    color: #fff;
+    cursor: pointer;
+    opacity: 0;/*隐藏*/
+    transition: all 0.2s;
+}
+.prev{
+    left: 50px;
+}
+.next{
+    right: 50px;
+}
+.banner:hover .fader_controls .prev{
+    opacity: 0.7;
+    left: 0;
+}
+.banner:hover .fader_controls .next{
+    opacity: 0.7;
+    right: 0;
+}
+
+/* 轮播图页标 */
+.pager_list{
+    position: absolute;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    bottom: 0;
+    /* 文本居中   对行内块也有效 */
+    text-align: center;
+}
+.pager_list li{
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #fff;
+    opacity: 0.3;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.pager_list li:hover{
+    opacity: 1;
+}
+
+
+/* 右侧 toppic图片 */
+.toppic{
+    width: 32%;
+    float: right;
+}
+.toppic li{
+    width: 100%;
+    position: relative;
+    /* 实现半透明效果 */
+    background-color: #000;
+}
+.toppic li:last-child{
+    margin-top: 22px;
+}
+.toppic li img{
+    width: 100%;
+    height: 200px;
+    display: block;
+}
+.toppic li div{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: #fff;
+    background-color: rgba(0,0,0,0.7);
+    padding: 10px 20px;
+}
+.toppic li span{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: #fff;
+    background-color: rgba(0,0,0,0.7);
+    padding: 6px 10px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+/* 背景图片样式 */
+img{
+width:1140px;
+height:600px;
+z-index: 1;
+}
+
+/* 为toppic的图片设置半透明效果 */
+/* .toppic li{
+    background-color: #000;
+} */
+.toppic li i{
+    display: block;
+    opacity: 0.7;
+    transition: all 0.5s;
+}
+.toppic li i:hover{
+    opacity: 1;
+}
+
+/* blank */
+body{
+    background-color:floralwhite;
+}
+.blank{
+    clear: both;
+    height: 20px;
+}
+
+/* 页脚样式 */
+footer{
+    width: 100%;
+    padding:30px 0;
+    background-color: #333;
+    color: blue;
+    text-align: center;
+}
+footer a{
+    color: #a5a4a4;
+}
+footer a:hover{
+    color: #c1edf2;
+}

@@ -1,0 +1,26 @@
+/* 自定义文件  补充样式代码 实现轮播效果 */
+.fader{
+    /* 百分比内边距是按照父元素的宽度设置 */
+    padding-top:56%;
+}
+.fader .slide{
+    position: absolute;
+    top: 0;
+    opacity: 0;/*隐藏所有图片*/
+}
+.fader .fader_controls div{
+    z-index: 4;
+}
+/* 页标 */
+.pager_list{
+    z-index: 4;
+}
+/* 显示当前图片对应的页标 */
+.pager_list li{
+    margin: 0 7px;
+    /* 文本缩进   -9999向左缩进9999像素 */
+    text-indent: -9999px;
+}
+.pager_list li.page.active{
+    opacity: 1;
+}

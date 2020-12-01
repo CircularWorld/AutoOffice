@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>作图神器</title>
+    <link rel="stylesheet" href="/static/css/img_style.css"/>
+    <link rel="stylesheet" href="/static/css/layui.css"/>
+    <link rel="stylesheet" href="/static/css/index.css"/>
+    <script src="/static/js/jquery-1.11.3.js"></script>
+</head>
+<body>
+<div class="rootLayout">
+    <div class="infoLayout">
+        <fieldset class="layui-elem-field">
+            <legend>
+                <h3 class="bold">全部工具</h3>
+            </legend>
+
+        </fieldset>
+        <div class="topRightCommandArea">
+            <div class="btnItem userPreview" onclick="preview()">
+                <!-- react-text: 50 -->还原
+                <!-- /react-text -->
+            </div>
+            <a class="down">
+                <div class="btnItem downloadBtn" onclick="download()">
+                    <!-- react-text: 53 -->下 载
+                    <!-- /react-text -->
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="contentWrapper">
+        <div class="rightLayout">
+            <span class="sort">操作类型:</span><br><br>
+            <button class="layui-btn layui-btn-normal" id="btn_water" style="margin-left: 0">修改</button>
+            <br/><br/>
+
+            <button class="layui-btn layui-btn-normal" id="btn_compress" style="margin-left: 0">生产</button>
+            <br/><br/>
+
+        </div>
+        <div class="canvasLayout">
+            <div class="layui-upload-list" id="image">
+                <!-- 图片预览 -->
+                <iframe src="" style="width: 100%;height: 800px;"></iframe>
+            </div>
+            <div class="hide_image" style="display: none">
+                <img src="" alt="">
+            </div>
+        </div>
+        <div class="floatToolPanel">
+            <div class="helperLayout">
+                <div style="margin-top: 10px">
+                    <div class="water">
+                        <div style="margin: 5px 10px">
+                            查找文本：<input value="text" id="find_content" type="text" class="te" type="text"
+                                        style="width: 150px">
+                        </div>
+
+                        <div style="margin: 5px 10px">
+                            替换文本：<input value="text" id="replace_content" type="text" class="te" type="text"
+                                        style="width: 150px">
+                        </div>
+                        <br/>
+                        <button class="layui-btn layui-btn-normal" id="btn_ca" style="margin-top: 10px;">确定</button>
+                    </div>
+                    <div class="compress">
+                        <div style="margin: 5px 10px">
+                            旧对象：<input value="text" id="old_obj" type="text" class="te" type="text"
+                                       style="width: 150px">
+                        </div>
+
+                        <div style="margin: 5px 10px">
+                            新对象：<input value="text" id="new_obj" type="text" class="te" type="text"
+                                       style="width: 150px"><br/>
+                            <span>**请用“/”分割对象</span>
+
+                        </div>
+                        <br/>
+                        <button class="layui-btn layui-btn-normal" id="btn_ok" style="margin-top: 10px;">确定</button>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="userUploadBtn">
+                <span>上传文件</span>
+                <input id="inputfile" type="file" name="inputfile" class="inputfile" accept=".doc,.docx"
+                       onchange="uploadImg(this)"
+                       multiple/>
+            </div>
+        </div>
+        <div class="floatToolPanel_bg"></div>
+    </div>
+</div>
+
+
+</body>
+<script>
+    // 下载
+    function download() {
+        // alert('123');
+        var url_list = [];
+        var tags = document.getElementsByTagName('iframe')
+        for (var i = 0; i < tags.length; i++) {
+            // console.log(tags[i].src)
+            url_list.push(tags[i].src)
+        }
+
+        if ($(".layui-upload-list").children('iframe')[0].src != 'http://127.0.0.1:8000/v1/words/') {
+            $(".down").attr('href', '/v1/words/download?data=' + url_list);
+        } else {
+            alert("请先上传文件")
+        }
+    }
+
+    // 还原
+    function preview() {
+
+        var o_src = $(".hide_image").children('img')[0].src;
+        if (o_src != 'http://127.0.0.1:8000/v1/words/') {
+            $("#image").children('iframe').attr('src', o_src);
+        }
+
+    }
+
+    $('#btn_water').click(function () {
+        $('.water').show();
+        $('.compress').hide();
+        $('.cut').hide()
+    });
+    $('#btn_compress').click(function () {
+        $('.water').hide();
+        $('.compress').show();
+        $('.cut').hide()
+    });
+
+
+</script>
+<script>
+
+    // ajax 异步查找替换
+    $('#btn_ca').click(function () {
+        var find_content = $('#find_content').val();
+        var replace_content = $('#replace_content').val();
+        var ss = $(".layui-upload-list").children('iframe')[0].src;
+        if (ss != "http://127.0.0.1:8000/v1/words") {
+            if (find_content && replace_content) {
+                var formData = new FormData();
+                formData.append('find_content', find_content);
+                formData.append('replace_content', replace_content);
+                formData.append('file', $(".layui-upload-list").children('iframe')[0].src);
+
+                var oa_url = 'http://127.0.0.1:8000/v1/words';
+                $.ajax({
+                    url: oa_url + '/modify',
+                    processData: false, // 这个必须为false，不转换的信息
+                    contentType: false, // 这个必须为false，不指定发送信息的编码类型
+                    data: formData,
+                    type: "POST",
+                    success: function (data) {
+                        // 你自己的回调方法
+                        if (data.code == 200) {
+                            //alert(data.title + "......" + oa_url + data.url)
+                            $(".layui-upload-list").children('iframe').attr('src', oa_url + data.url);
+                        } else {
+                            alert("失败！！！")
+                        }
+                    }
+                })
+            }
+        }
+    });
+
+    // ajax异步替换对象
+    $('#btn_ok').click(function () {
+        var old_obj = $('#old_obj').val();
+        var new_obj = $('#new_obj').val();
+        var ss = $(".layui-upload-list").children('iframe')[0].src;
+        if (ss != "http://127.0.0.1:8000/v1/words") {
+            if (old_obj && new_obj) {
+                var formData = new FormData();
+                formData.append('old_obj', old_obj);
+                formData.append('new_obj', new_obj);
+                formData.append('file', ss);
+                var oa_url = 'http://127.0.0.1:8000/v1/words';
+                $.ajax({
+                    url: oa_url + '/batch',
+                    processData: false, // 这个必须为false，不转换的信息
+                    contentType: false, // 这个必须为false，不指定发送信息的编码类型
+                    data: formData,
+                    type: "POST",
+                    success: function (data) {
+                        // 你自己的回调方法
+                        if (data.code == 200) {
+                            // alert(data.title + "......" + oa_url + data.url)
+                            var html = "";
+                            data.url.forEach(function (obj, i) {
+                                html += '<iframe src="' + oa_url + obj + '" style="width: 100%;height: 800px;"></iframe>'
+                                // $(".layui-upload-list").children('iframe').attr('src', oa_url + data.url);
+                                $(".layui-upload-list").html(html)
+                            });
+
+                        } else {
+                            alert("失败！！！")
+                        }
+                    }
+                })
+            }
+        }
+    });
+
+    // ajax异步上传
+    function uploadImg(obj) {
+        var formData = new FormData();
+        formData.append('title', obj.files[0].name);
+        formData.append('file', obj.files[0]);
+        var oa_url = 'http://127.0.0.1:8000/v1/words';
+
+        $.ajax({
+            url: oa_url + '/upload',
+            processData: false, // 这个必须为false，不转换的信息
+            contentType: false, // 这个必须为false，不指定发送信息的编码类型
+            // contentType: "application/json",
+            data: formData,
+            type: "POST",
+            success: function (data) {
+                // 你自己的回调方法
+                if (data.code === 200) {
+                    $(".layui-upload-list").children('iframe').attr('src', oa_url + data.url);
+                    $(".hide_image").children('img').attr('src', oa_url + data.url);
+                } else {
+                    alert("上传失败！！！")
+                }
+            }
+        })
+    }
+
+</script>
+</html>

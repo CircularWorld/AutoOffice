@@ -1,0 +1,53 @@
+body {
+    background:url('/static/images/微信图片_20200913174100.jpg') no-repeat fixed;
+    height: 100%;
+    background-size: 100%;
+}
+
+html {
+    height: 100%;
+}
+
+.mb-50 {
+    margin-bottom: 50px;
+}
+
+/* .sort {
+    font-size: 16px;
+    margin-right: 10px;
+} */
+/* 
+#image {
+    width: 300px;
+    display: flex;
+} */
+
+/* #image img {
+    width: 300px;
+    margin-right: 10px;
+} */
+
+.bold {
+    font-weight: bold;
+}
+
+#text1{
+/*	margin-left: 20px;
+	*/
+	width: 130px;
+	border-color:blue;
+	height: 30px;
+	border-radius: 5px;
+}
+
+.te{
+	width: 85px;
+	border-color:blue;
+	height: 30px;
+	border-radius: 5px;
+}
+select{
+	border-color:blue;
+	height: 30px;
+	border-radius: 5px;
+}

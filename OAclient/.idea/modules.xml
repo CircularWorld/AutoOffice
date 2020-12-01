@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../OA/.idea/OA.iml" filepath="$PROJECT_DIR$/../OA/.idea/OA.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/OAclient.iml" filepath="$PROJECT_DIR$/.idea/OAclient.iml" />
+      <module fileurl="file://$USER_HOME$/JYH/autoworkproject/.idea/autoworkproject.iml" filepath="$USER_HOME$/JYH/autoworkproject/.idea/autoworkproject.iml" />
+    </modules>
+  </component>
+</project>

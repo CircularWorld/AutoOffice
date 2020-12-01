@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数据分析</title>
+    <style>
+        .target_image{
+             width: 1400px;
+        }
+                /* 父容器 */
+        #silderBar {
+            width: 739px;
+            height: 419px;
+            position: relative;
+            float:left;
+            display:inline-block;
+            margin-left:100px;
+            margin-top:150px;
+        }
+
+        /* 所有轮播图片 */
+        #silderBar>img {
+            position: absolute;
+            top: 0;
+            z-index: 1;
+            opacity: 0;
+            transition: all 0.5s;
+        }
+
+        /* 要显示的图片 */
+        #silderBar>img.active {
+            opacity: 1;
+            z-index: 2;
+
+        }
+
+        /* 左右小箭头按钮 */
+        #ll,
+        #rr {
+            position: absolute;
+            z-index: 6;
+            top: 50%;
+            margin-top: -20px;
+        }
+
+        /* 把右箭头调至右边 */
+        #rr {
+            right: 0px;
+        }
+        #data_visualization {
+            float:right;
+            display:inline-block;
+            margin-right:200px;
+            background:url(../../static/images/bluebg.jpg);
+            width:400px;
+            height:400px;
+            margin-top:150px;
+        }
+        .excel_format{
+            float:left;
+            margin-left:80px;
+        }
+        body{
+            font-family:"宋体";
+            background-image:url(../../static/images/data_visualization_bgimg.jpg);
+            background-repeat:repeat-y;
+        }
+
+    </style>
+    <script src="../../static/js/jquery.min.js"></script>
+</head>
+<body>
+{% extends '/home/tarena/project/AutoOffice/OA/excel/templates/excel/header.html' %}
+{% block content %}
+<!--左侧轮播图-->
+<div id="silderBar">
+    <img class="active item" src="../../static/images/excel_data1.jpg" alt="">
+    <img class="item" src="../../static/images/excel_data2.jpg" alt="">
+    <img class="item" src="../../static/images/excel_data3.jpg" alt="">
+    <img class="item" src="../../static/images/excel_data4.jpg" alt="">
+    <img class="item" src="../../static/images/excel_data5.jpg" alt="">
+    <div>
+        <img id="ll" src="../../static/images/l1-6.png" alt="">
+        <img id="rr" src="../../static/images/r1-6.png" alt="">
+    </div>
+</div>
+<script>
+            var ll = document.getElementById("ll");
+            var rr = document.getElementById("rr");
+            var i = 0;
+            var imgs = document.getElementsByClassName("item");
+            ll.onclick = function () {
+                imgs[i].className = "item";
+                i--;
+                if (i == -1) {
+                    i = imgs.length - 1;
+                };
+                imgs[i].className = "item active";
+            }
+            rr.onclick = function(){
+                imgs[i].className = "item";
+                i++;
+                if (i == imgs.length){
+                    i = 0;
+                }
+                imgs[i].className = "item active";
+            }
+                    var timer = setInterval(rr.onclick,1500);
+
+            var silderBar = document.getElementById("silderBar");
+            silderBar.onmouseover = function(){
+                clearInterval(timer);
+            }
+            silderBar.onmouseout = function(){
+                timer = setInterval(rr.onclick,1500);
+            }
+
+
+
+
+
+
+</script>
+<div id="data_visualization">
+    <center>
+        <form method="post" name="char_form" action="http://127.0.0.1:8000/excel/data_visualization" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h1>生成数据图表</h1>
+            <input type="file" name="files"><br>
+            <div>
+                <input type="text" name="data_name" placeholder="请输入需要生成图表的数据字段名" required="required">
+            </div>
+            <div>
+                <input type="text" name="sheet_name" placeholder="请输入数字选择工作簿(0表示工作簿1,1表示工作簿2，以此类推)" required="required">
+            </div>
+            <select name="choice_chart">
+                <option>----请选择可视化图形----</option>
+                <option name="choice_chart" value="bar_chart">柱状图</option>
+                <option name="choice_chart" value="line_chart">折线图</option>
+                <option name="choice_chart" value="pie_chart">饼图</option>
+            </select>
+            <input type="submit" value="上传">
+            <a href="download">下载文件</a>
+
+        </form>
+    </center>
+</div>
+<div class="excel_format">
+    <br>
+    <b><small>excel文件格式</small></b>
+    <hr>
+    <img src="../../static/images/data_visualization.jpg" class="target_image">
+</div>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>办办来了</title>
+    <link rel="stylesheet" href="../static/css/index_talk.css">
+    <script type="text/javascript" src="../static/js/jquery.min.js"></script>
+<!--    <script src="../static/js/jquery.min.js" type="text/javascript"></script>-->
+        <style>
+        body{
+          font-family: "华文细黑";
+          background:url("../static/images/robot.jpg") no-repeat;
+          background-size: 100%;
+        }
+
+    </style>
+</head>
+
+<body>
+<div class="talk_con" >
+    <div id='botdiv'>
+            <button type="button"  id="class" >关闭</button>
+            </div>
+            <div class="talk_show" id="words">
+                <div class="atalk"><span id="asay">办办：有什么问题，欢迎来问办办</span></div>
+            </div>
+            <div class="talk_input">
+
+                <input type="text" class="talk_word" name="talk_word" id="talkwords">
+                <input type="button"  value="发送" class="talk_sub" id="talksub" >
+
+         </div>
+        </div>
+<script>
+window.onload = function(){
+                var Words = document.getElementById("words");
+                var Who = document.getElementById("who");
+                var TalkWords = document.getElementById("talkwords");
+                var TalkSub = document.getElementById("talksub");
+                var Class = document.getElementById("class");
+
+                Class.onclick = function(){
+                   // alert('不好意思，关不了，略略略')
+                    window.location ='http://127.0.0.1:5000/index';
+
+                }
+
+                TalkSub.onclick = function(){
+                    console.log(TalkWords.value)
+
+                    //定义空字符串
+                    var str = "";
+                    if(TalkWords.value == ""){
+                         // 消息为空时弹窗
+                        alert("消息不能为空");
+                        return;
+                    }
+
+                    str = '<div class="btalk"><span>' + TalkWords.value +'</span></div>' ;
+
+
+                    Words.innerHTML = Words.innerHTML + str;
+                    $.ajax({
+                                    url:'http://127.0.0.1:8000/robot/robot',
+                                    type:'POST',
+                                    dataType:'json',
+                                    data:JSON.stringify(TalkWords.value),
+                                    contentType:'application/json',
+                                    success:function(res){
+                                        //alert('asd')
+                                    str = '<div class="atalk"><span>' + res.results_text +'</span></div>';
+                                    Words.innerHTML = Words.innerHTML + str;
+                                    TalkWords.value='';
+                                    }
+                                })
+
+            }}
+
+
+</script>
+
+</body>
+</html>

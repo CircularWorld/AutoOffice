@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>办办-首页</title>
+    <link rel="stylesheet" href="../static/css/index.css">
+    <link rel="stylesheet" href="../static/css/easyfader.css">
+    <!-- 引入js文件 -->
+    <script src="../static/js/jquery.min.js"></script>
+    <!-- 依赖于jQuery的页面插件  实现图片轮播功能 -->
+    <script src="../static/js/jquery.easyfader.min.js"></script>
+    <!-- 获取轮播图的图片和描述文字 -->
+    <script src="../static/js/fader.data.js"></script>
+    <!-- 自定义js文件 -->
+    <script src="../static/js/index.js"></script>
+
+</head>
+
+<body> 
+
+    <button onclick="parent.location.href='robot'" type="submit" id="rig"></button>
+   <iframe name="robot" src="">
+       <h1>123123</h1>
+   </iframe>
+    <!-- <div id="header"></div> -->
+    <header>
+        <nav>
+            <!-- logo文字 -->
+            <h1><a href="#">办办欢迎您</a></h1>
+            <!-- 导航菜单 ul>li*6>a -->
+            <ul class="buttons">
+                <li class="talk"><a href="word.html"><span>
+                        </span>word文件处理</a>
+                </li>
+                <li class="send_emil"><a href="excel.html"><span></span>
+                        excel文件处理</a>
+                </li>
+                <li class="process"><a href="file.html"><span></span>本地文件处理</a>
+                </li>
+                <li class="image"><a href="image.html"><span></span>图像处理</a>
+                </li>
+            </ul>
+            
+            <!-- 登录注册退出 -->
+            <div>
+                <a href="/login" id="login" target="_blank">登录</a>
+                <a href="/register" id="register" target="_blank">注册</a>
+            </div>
+        </nav>
+    </header>
+    <!-- <div id="main"></div> -->
+    <main>
+        <form action="" method="post">
+            <div class="search">
+                <label for="search">模板搜索</label>
+                <input name="wd" id="search" value="">
+            </div>
+            <div>
+                <input type="button" value="立即搜索" onclick="search()">
+            </div>
+        </form>
+        <div class="im"><img src="../static/images/25.jpg" ></div>
+            <div>
+                <div class="banner">
+                    <ul id="fader" class="fader">
+
+                    </ul>
+                </div>
+                <ul class="toppic">
+                    <li>
+                        <a href="#">
+                            <i><img src="../static/images/1.jpg" alt=""></i>
+                        </a>
+                        <div>人工时智能时代到来</div>
+                        <span>The time has come</span>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i><img src="../static/images/2.jpg" alt=""></i>
+                        </a>
+                        <div>紧跟时代潮流</div>
+                        <span>Follow me</span>
+                    </li>
+                </ul>
+            </div>
+            <!-- blank清除上方浮动的影响  同时调整距离 -->
+            <div class="blank"></div>
+            <div class="blogsbox">
+
+            </div>
+    </main>
+    <!-- <div id="footer"></div> -->
+    <footer>
+        <div>
+            <a href="#">自动化办公就是so easy</a>
+            <a href="#">快来加入我们吧！</a>
+        </div>
+    </footer>
+    <script>
+	function search(){
+	    keyword =$('.keyword').val();
+		post_data ={"keyword":keyword};
+		console.log(post_data);
+		$.ajax({
+			url:'http://127.0.0.1:8000/Mubanspider',
+			type:'post',
+			dataType:'json',
+			data:JSON.stringify(post_data),
+			contentType:'application/json',
+			success:function(res){
+				if(res.code ==200){
+					console.log(res.data.image);
+					console.log(res.data.name);
+					console.log(res.data.downld.url)
+				}else{
+					alert("您搜索的页面不存在");
+				}
+			}
+		})
+	}
+
+    </script>
+</body>
+
+</html>

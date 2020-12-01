@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>作图神器</title>
+    <link rel="stylesheet" href="/static/css/img_style.css"/>
+    <link rel="stylesheet" href="/static/css/layui.css"/>
+    <link rel="stylesheet" href="/static/css/index.css"/>
+
+    <script src="/static/js/jquery-1.11.3.js"></script>
+</head>
+<body>
+<div class="rootLayout">
+    <div class="infoLayout">
+        <fieldset class="layui-elem-field">
+            <legend>
+                <h3 class="bold">全部工具</h3>
+            </legend>
+
+        </fieldset>
+        <div class="topRightCommandArea">
+            <div class="btnItem userPreview" onclick="preview()">
+                <!-- react-text: 50 -->还原
+                <!-- /react-text -->
+            </div>
+            <a class="down">
+                <div class="btnItem downloadBtn" onclick="download()">
+                    <!-- react-text: 53 -->下 载
+                    <!-- /react-text -->
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="contentWrapper">
+        <div class="rightLayout">
+            <span class="sort">操作类型:</span><br><br>
+            <button class="layui-btn layui-btn-normal" id="btn_water" style="margin-left: 0">添加水印</button>
+            <br/><br/>
+
+            <button class="layui-btn layui-btn-normal" id="btn_compress" style="margin-left: 0">压缩图片</button>
+            <br/><br/>
+
+            <button class="layui-btn layui-btn-normal" id="btn_cut" style="margin-left: 0">剪切图片</button>
+            <br/><br/>
+        </div>
+        <div class="canvasLayout">
+            <div class="layui-upload-list" id="image">
+                <!-- 图片预览 -->
+                <img src="" alt="">
+            </div>
+            <div class="hide_image" style="display: none">
+                <img src="" alt="">
+            </div>
+        </div>
+        <div class="floatToolPanel">
+            <div class="helperLayout">
+                <div style="margin-top: 10px">
+                    <div class="water">
+                        <br/><br/>
+                        <br/><br/><br/>
+                        <div style="margin: 5px 10px">
+                            文字：<input value="text" id="font_content" type="text" class="te" type="text"
+                                      style="width: 150px">
+                        </div>
+                        <div style="margin: 5px 10px">
+                            坐标：<input id="text_x" class="te" type="text" placeholder="x" style="width: 50px">
+                            <input id="text_y" class="te" type="text" placeholder="y" style="width: 50px"><br/>
+                        </div>
+                        <div style="margin: 5px 10px">
+                            大小：<select id="select-font-size"></select><br/>
+                        </div>
+                        <br/>
+                        <button class="layui-btn layui-btn-normal" id="btn_wa" style="margin-top: 10px;">确定</button>
+                    </div>
+                    <div class="compress">
+                        <br/><br/>
+                        <br/><br/><br/>
+                        压缩比例：<select id="compression_ratio"></select>
+                        <br/>
+                        <button class="layui-btn layui-btn-normal" id="btn_ba" style="margin-top: 10px;">确定</button>
+                    </div>
+                    <div class="cut">
+                        <br/><br/>
+                        <br/><br/><br/>
+                        位置：<input id="text_left" class="te" type="text" placeholder="left" value="0"
+                                  style="width: 40px">
+                        <input id="text_upper" class="te" type="text" placeholder="upper" value="0" style="width: 40px">
+                        <input id="text_right" class="te" type="text" placeholder="right" value="100"
+                               style="width: 40px">
+                        <input id="texty_lower" class="te" type="text" placeholder="lower" value="100"
+                               style="width: 40px">
+                        <br/><br/>
+                        <button class="layui-btn layui-btn-normal" id="btn_ca" style="margin-top: 10px;">确定</button>
+                    </div>
+                </div>
+            </div>
+            <div class="userUploadBtn">
+                <span>上传图片</span>
+                <input id="inputfile" type="file" name="inputfile" class="inputfile" accept="image/*"
+                       onchange="uploadImg(this)"
+                       multiple/>
+            </div>
+        </div>
+        <div class="floatToolPanel_bg"></div>
+    </div>
+</div>
+
+
+</body>
+<script>
+    function download() {
+        var ss = $(".layui-upload-list").children('img')[0].src;
+        if (ss != 'http://127.0.0.1:8000/v1/images/img') {
+            // alert($(".layui-upload-list").children("img")[0].src);
+            $(".down").attr('href', '/v1/images/img/download?data=' + ss);
+        } else {
+            alert("请先上传文件")
+        }
+    }
+
+    function preview() {
+        var o_src = $(".hide_image").children('img')[0].src;
+        $("#image").children('img').attr('src', o_src);
+
+    }
+
+    $('#btn_water').click(function () {
+        // $("#image").children('img').attr('src', "");
+        $('.water').show();
+        $('.compress').hide();
+        $('.cut').hide()
+    });
+    $('#btn_compress').click(function () {
+        // $("#image").children('img').attr('src', "");
+        $('.water').hide();
+        $('.compress').show();
+        $('.cut').hide()
+    });
+    $('#btn_cut').click(function () {
+        // $("#image").children('img').attr('src', "");
+        $('.water').hide();
+        $('.compress').hide();
+        $('.cut').show();
+    });
+
+    // 字体大小下拉菜单
+    $(function () {
+        var fontSize = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+        for (var i = 0; i < fontSize.length; i++) {
+            // ES6字符串模板
+            var Html = `<option>${fontSize[i]}</option>`;
+            $("#select-font-size").append(Html);
+        }
+    });
+
+    //压缩下拉菜单
+    $(function () {
+        var fontSize = ['100%', '90%', '80%', '70%', '60%', '50%', '40%', '30%', '20%', '10%'];
+        for (var i = 0; i < fontSize.length; i++) {
+            // ES6字符串模板
+            var Html = `<option>${fontSize[i]}</option>`;
+            $("#compression_ratio").append(Html);
+        }
+    });
+
+</script>
+<script>
+
+    // ajax 异步剪切图片
+    $('#btn_ca').click(function () {
+        var left = $('#text_left').val();
+        var upper = $('#text_upper').val();
+        var right = $('#text_upper').val();
+        var lower = $('#text_upper').val();
+        var ss = $(".layui-upload-list").children('img')[0].src;
+        if (ss != 'http://127.0.0.1:8000/v1/images/img') {
+            if (left && upper && right && lower) {
+                var formData = new FormData();
+                formData.append('left', $('#text_left').val());
+                formData.append('upper', $('#text_upper').val());
+                formData.append('right', $('#text_right').val());
+                formData.append('lower', $('#texty_lower').val());
+                formData.append('image', $(".layui-upload-list").children('img')[0].src);
+                var oa_url = 'http://127.0.0.1:8000/v1/images';
+                $.ajax({
+                    url: oa_url + '/img/cut',
+                    processData: false, // 这个必须为false，不转换的信息
+                    contentType: false, // 这个必须为false，不指定发送信息的编码类型
+                    data: formData,
+                    type: "POST",
+                    success: function (data) {
+                        // 你自己的回调方法
+                        if (data.code == 200) {
+                            //alert(data.title + "......" + oa_url + data.url)
+                            $(".layui-upload-list").children('img').attr('src', oa_url + data.url);
+                        } else {
+                            alert("失败！！！")
+                        }
+                    }
+                })
+            }
+        } else {
+            alert("请先上传图片")
+        }
+    });
+
+    // ajax异步压缩
+    $('#btn_ba').click(function () {
+        var ss = $(".layui-upload-list").children('img')[0].src;
+        if (ss != 'http://127.0.0.1:8000/v1/images/img') {
+            var formData = new FormData();
+            formData.append('proportion', $('#compression_ratio').val());
+            formData.append('image', $(".layui-upload-list").children('img')[0].src);
+
+            var oa_url = 'http://127.0.0.1:8000/v1/images';
+            $.ajax({
+                url: oa_url + '/img/compress',
+                processData: false, // 这个必须为false，不转换的信息
+                contentType: false, // 这个必须为false，不指定发送信息的编码类型
+                data: formData,
+                type: "POST",
+                success: function (data) {
+                    // 你自己的回调方法
+                    if (data.code == 200) {
+                        $(".layui-upload-list").children('img').attr('src', oa_url + data.url);
+                    } else {
+                        alert("失败！！！")
+                    }
+                }
+            })
+        } else {
+            alert("请先上传图片")
+        }
+    });
+
+    // ajax异步添加水印
+    $('#btn_wa').click(function () {
+        var font_content = $('#font_content').val();
+        var text_x = $('#text_x').val();
+        var text_y = $('#text_y').val();
+        var ss = $(".layui-upload-list").children('img')[0].src;
+        if (ss != 'http://127.0.0.1:8000/v1/images/img') {
+            if (font_content && text_x && text_y) {
+                var formData = new FormData();
+                formData.append('font_content', $('#font_content').val());
+                formData.append('font_size', $('#select-font-size').val());
+                formData.append('text_x', $('#text_x').val());
+                formData.append('text_y', $('#text_y').val());
+                formData.append('image', $(".layui-upload-list").children('img')[0].src);
+
+                var oa_url = 'http://127.0.0.1:8000/v1/images';
+                $.ajax({
+                    url: oa_url + '/img/water',
+                    processData: false, // 这个必须为false，不转换的信息
+                    contentType: false, // 这个必须为false，不指定发送信息的编码类型
+                    data: formData,
+                    type: "POST",
+                    success: function (data) {
+                        // 你自己的回调方法
+                        if (data.code == 200) {
+                            $(".layui-upload-list").children('img').attr('src', oa_url + data.url);
+                        } else {
+                            alert("失败！！！")
+                        }
+                    }
+                })
+            }
+        } else {
+            alert("请先上传图片")
+        }
+
+    });
+
+    // ajax异步上传
+    function uploadImg(obj) {
+        var formData = new FormData();
+        formData.append('title', obj.files[0].name);
+        formData.append('image', obj.files[0]);
+        var oa_url = 'http://127.0.0.1:8000/v1/images';
+
+        $.ajax({
+            url: oa_url + '/img/upload',
+            processData: false, // 这个必须为false，不转换的信息
+            contentType: false, // 这个必须为false，不指定发送信息的编码类型
+            data: formData,
+            type: "POST",
+            success: function (data) {
+                // 你自己的回调方法
+                if (data.code === 200) {
+                    $(".layui-upload-list").children('img').attr('alt', data.title);
+                    $(".layui-upload-list").children('img').attr('src', oa_url + data.url);
+                    $(".hide_image").children('img').attr('alt', data.title);
+                    $(".hide_image").children('img').attr('src', oa_url + data.url);
+                } else {
+                    alert("上传失败！！！")
+                }
+            }
+        })
+    }
+
+</script>
+</html>

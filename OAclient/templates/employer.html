@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="#"/>
+    <meta charset="UTF-8">
+    <title>员工管理系统</title>
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <script src="/static/js/jquery-1.11.3.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+</head>
+<style>
+    .bg img{
+        position: fixed;
+        top:0;
+        width: 100%;
+        height:100%;
+        opacity: 0.6;
+        z-index: -100;
+    }
+    td{
+        width: 200px;
+    }
+    .btn_sc{
+        background-color: red;
+        float: left;
+        border: 1px solid black;
+        color: white
+    }
+    .btn_xg{
+       background-color: white;
+        margin-left: 20px;
+        float: left;
+        border: 1px solid black;
+    }
+    .btn_bj{
+        background-color: blue;
+        margin-left: 20px;float: left;
+        border: 1px solid black;
+        color: white
+
+    }
+    .title>tr>td{
+        font-weight: 700;
+    }
+</style>
+<body>
+	<div class="bg">
+		<img src="/static/images/employer.jpg" alt="">
+	</div>
+<div class="container" >
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="title">
+        <tr>
+            <td>序号</td>
+            <td>用户名</td>
+            <td>昵称</td>
+            <td>手机</td>
+            <td>解雇</td>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+</body>
+<script>
+
+    token = window.localStorage.getItem('dnblog_token');
+    email = window.localStorage.getItem('dnblog_email');
+    var url = document.location.toString();
+    console.log(url)
+    var query_split = url.split('?');
+    var query_set = '';
+    if(query_split.length > 1){
+        query_set = query_split[1];
+    }
+    var arrUrl = url.split("//");
+    //当前访问的企业用户
+    var blog_email = arrUrl[1].split('/')[1];
+    console.log('>>>>>>>>'+blog_email)
+
+    if(query_set){
+        var get_url = "http://127.0.0.1:8000/v1/companys/users_show/"+ blog_email + "?" + query_set;
+    }else{
+        var get_url = "http://127.0.0.1:8000/v1/companys/users_show/"+ blog_email;
+
+    }
+    console.log('>>>>>>>>'+get_url)
+    var html_tbody = '';
+
+    $.ajax({
+        // 请求方式
+        type:"get",
+        // url
+        url: get_url,
+        beforeSend: function(request) {
+            request.setRequestHeader("Authorization", token);
+        },
+        success:function (result) {
+            if (200 == result.code){
+                console.log('>>>>>>',result);
+                console.log('>>>>>>',result.c_name);
+                $(document).attr('title', result.c_name+'员工管理');
+
+                var users = result.data.users
+                if(users.length == 0){
+                    html_tbody += '<tr>';
+                        html_tbody += '<td>--</td>';
+                        html_tbody += '<td>--</td>';
+                        html_tbody += '<td>--</td>';
+                        html_tbody += '<td>--</td>';
+                        html_tbody += "<td>--</td>";
+                        html_tbody +='</tr>';
+
+                } else {
+
+                    for(var t in users){
+                        var id = users[t].id;
+                        var username = users[t].username;
+                        var nickname = users[t].nickname;
+                        var phone = users[t].phone;
+                        html_tbody += '<tr>';
+                        html_tbody += '<td>'+id+'</td>';
+                        html_tbody += '<td>'+username+'</td>';
+                        html_tbody += '<td>'+nickname+'</td>';
+                        html_tbody += '<td>'+phone+'</td>';
+                        html_tbody += "<td><button class='delete btn_sc' id = "+username+">移除</button></td>";
+                        html_tbody +='</tr>';
+                        // var get_url = "http://127.0.0.1:8000/v1/companys/users_show/"+ blog_email + "?" + query_set;
+                    }
+
+                }
+                
+
+                $('tbody').html(html_tbody);
+
+                //添加删除事件
+                $('.delete').on('click', function(){
+                    
+                    // console.log('kkkkkkkk',this.id)
+                    username = this.id
+                    var delete_url = "http://127.0.0.1:8000/v1/companys/user_delete" + "/" + username;
+                    console.log(delete_url)
+                    $.ajax({
+                        // 请求方式
+                        type:"delete",
+                        url: delete_url,
+                        beforeSend: function(request) {
+                            request.setRequestHeader("Authorization", token);
+                        },
+                        success:function (result) {
+                            if (200 == result.code){
+
+                               alert('删除成功');
+                               window.location.reload()
+
+                            }else{
+
+                               alert('删除失败');
+
+                            }
+                        }
+
+                    })
+                });
+
+            }else{
+                alert(result.error)
+            }
+          }
+      });
+
+</script>
+
+</html>
+

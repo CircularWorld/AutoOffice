@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    var arr = [1,"a",2,"b",3,"c",4,"d",5,"W","H"]
+        
+    function code(){
+        var yzm = [];
+        var len = prompt("输入验证码位数")
+        for(var i = 0;i < len;i++){
+            yzm[i] = arr[parseInt(Math.random()*arr.length)];
+            var picture = yzm.join("");
+        }
+        return picture;
+    }
+    function Verify(){
+        var picture = code();
+        var input = prompt(picture).toLowerCase();
+        if(input == picture.toLowerCase()){
+            console.log("登录成功");
+        }
+        
+    }
+        
+    </script>
+</html>

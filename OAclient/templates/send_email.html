@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>发送邮件</title>
+</head>
+<body background="../static/images/17.jpg" 
+    style="background-repeat: no-repeat;
+    background-size:100% 100%;
+    background-attachment: fixed;">
+
+<div class="tb">
+    <table style="background-color:lightskyblue;"align="center">
+        <!-- <tr><td>smtp:</td>
+            <td><input type="text" id = "txtSmtp" value="Smtp Server" />
+            </td>
+        </tr> -->
+        
+        <tr><td>发件人地址：</td>
+            <td><input type="text" id = "txtFrom" value="" />
+            </td>
+        </tr>
+
+        <tr><td>接收人地址：</td>
+            <td><input type="text" id = "txtTo" value="" />
+            </td>
+        </tr>
+
+        <tr><td >标题：</td>
+            <td><input type="text" id = "txtTitle" value="" />
+            </td>
+        </tr>
+
+        <tr><td> 内容: </td>
+            <td><input type="text" id = "txtContent" value="" />
+            
+            </td>
+        </tr>
+        <tr>
+            <td class="btn"> 
+                <input style="background-color: darkorange;" type="button" id="btnSend" value="发送" onclick="sendemail()"/>
+            </td>
+        </tr>
+    </table>
+
+</div>
+</body>
+<script src="../static/js/shuiyin.js"></script>
+<script type="text/javascript">
+var now = getNow();
+watermark({"watermark_txt":"python自动化办公 "+now});
+</script>
+</html>

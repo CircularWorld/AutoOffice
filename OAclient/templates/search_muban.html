@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>搜索模板</title>
+    <link rel="stylesheet" href="/static/css/search.css">
+</head>
+<script src="/static/js/jquery-1.11.3.js"></script>
+<body background="/static/images/37.jpg"
+    style="background-repeat: no-repeat;
+    background-size:100% 100%;
+    background-attachment: fixed;">
+<div class="dv1" style="text-align:center">
+    <input type="text" class="ss" name="keyword" id = 'keyword' value placeholder="输入关键字搜索模板如：'ppt'搜索所有ppt模板">
+    <button  type="submit" class="sub" onclick="">搜索</button>
+</div>
+<div class="top"></div>
+</body>
+<script src="/static/js/shuiyin.js"></script>
+<script type="text/javascript">
+var now = getNow();
+watermark({"watermark_txt":"python自动化办公 "+now});
+</script>
+<script>
+     $(function(){
+
+        $('.sub').click(function(){
+            console.log('点击搜索')
+            key_word = $("#keyword").val()
+            console.log(key_word)
+            post_data={'keyword':key_word}
+            var html_tbody='';
+            $.ajax({
+                url:"http://127.0.0.1:8000/Mubanspider/search_muban",
+                type:'post',
+			    dataType:'json',
+			    data:JSON.stringify(post_data),
+			    contentType:'application/json',
+                success:function(res){
+                    if(res.code==200){
+                        // console.log('>>>>>',res);
+                        // 处理 从 search_muban 返回的数据
+                        var infos=res.data.muban_info;
+                        // console.log('>>>>>');
+                        // console.log(infos);
+                        var base_url='https://www.glzy8.com';
+                        if(infos.length==0){
+                            alert("抱歉,你的思想太超前了,本网站无能为力")
+                        }else{
+                            for(var i in infos){
+                                img_url=infos[i].img_url;
+                                console.log(img_url)
+                                muban_name=infos[i].muban_name;
+                                console.log(muban_name)
+                                download_url=infos[i].download_url;
+                                console.log(download_url)
+
+                                html_tbody += '<ul class="list1">';
+                                html_tbody += '<li>';
+                                html_tbody += '<div class="lisbox">';
+                                html_tbody += '<a class="img"><img src='+base_url+img_url+'></a><br>';
+                                html_tbody += '<a class="bt">'+muban_name+'</a><br>';
+                                html_tbody += '<div class="mb"><a href='+download_url+'>点击下载</a><br>';
+                                html_tbody += '</div></div></li>';
+
+                            }
+                        }
+                    $('.top').html(html_tbody);
+                    }
+                }
+
+            })
+
+        })
+
+    })
+</script>
+</html>

@@ -1,0 +1,101 @@
+/* 初始化页面样式  去掉元素的默认样式 */
+body,ul,ol,li,h1,h2,h3,p{
+    margin: 0;
+    padding: 0;
+}
+ul,ol{
+    list-style: none;/*去掉列表默认样式*/
+}
+a{
+    text-decoration: none;/*去掉下划线*/
+}
+
+#rig{
+    border:0;
+    width:75px;
+    height:75px;
+    position:absolute;
+    right:0;
+    bottom:225px;
+    background: url(../images/22.jpg);
+}
+
+/* header部分 */
+header{
+    width: 100%;
+    background-color: #555;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+}
+/* 导航条部分 */
+nav{
+    width: 1140px;
+    height: 80px;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* logo文字 */
+/*
+    h1
+    能和其他元素并排显示
+    字体垂直居中
+    字体大小26px
+    距离右侧元素80px
+    h1 a
+    字体颜色 #c1edf2
+*/
+header nav h1{
+    float: left;
+    line-height: 80px;
+    font-size: 26px;
+    margin-right: 80px;
+}
+header nav h1 a{
+    color:#c1edf2;
+}
+/* 导航菜单 */
+/* 实现导航菜单 水平排列  垂直居中 */
+/* ul li a  字体颜色  #e5f2f2 */
+/* 超链接鼠标移入变成白色 */
+header nav ul li{
+    float: left;
+    line-height: 80px;
+    padding: 0 20px;
+}
+header nav ul li a{
+    color: #fff;
+}
+header nav ul li a:hover{
+    color:#000;
+}
+#search{
+    right:200px;
+}
+
+/* 登录注册 */
+/* 绝对定位  相对nav调整位置 */
+/* 登录距离nav右侧70px    注册距离nav右侧0px */
+header nav div {
+    position: absolute;
+    line-height: 75px;
+    color: #e5f2f2;
+    right:100px;
+}
+
+#register{
+
+    font-size: 25px;
+
+}
+#login{
+
+    font-size: 25px;
+
+}
+
+/* 主体样式 */
+/* header{
+    top:0
+} */

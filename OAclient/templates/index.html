@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>办办-首页</title>
+    <link rel="stylesheet" href="../static/css/index.css">
+    <link rel="stylesheet" href="../static/css/easyfader.css">
+    <!-- 引入js文件 -->
+    <script src="../static/js/jquery.min.js"></script>
+    <!-- 依赖于jQuery的页面插件  实现图片轮播功能 -->
+    <script src="../static/js/jquery.easyfader.min.js"></script>
+    <!-- 获取轮播图的图片和描述文字 -->
+    <script src="../static/js/fader.data.js"></script>
+    <!-- 自定义js文件 -->
+    <script src="../static/js/index.js"></script>
+    <style>
+        select{
+            appearance:none;
+            -moz-appearance:none; /* Firefox */
+            -webkit-appearance:none; /* Safari 和 Chrome */
+             background-color: transparent;
+             border: 0px;
+            color: white;
+            line-height:82px;
+           /* padding: 0px; */
+        }
+        select:focus{
+            border: 0px;
+        }
+        select option{
+            background-color: black;
+        }
+        #d2 a{
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+<!-- 
+<button onclick="window.location.href='http://127.0.0.1:8000/robot/robot'" type="submit" id="rig" target="_blank"></button> -->
+<a id="rig" href="http://127.0.0.1:8000/robot/robot" target="_blank"></a>
+
+<!-- <div id="header"></div> -->
+<header>
+    <nav>
+        <!-- logo文字 -->
+        <h1><a href="#">办办欢迎您</a></h1>
+        <!-- 导航菜单 ul>li*6>a -->
+        <ul class="buttons">
+            <li class="word"><a href="http://127.0.0.1:8000/v1/words"><span></span>word处理</a>
+            </li>
+            <li class="excel">
+                <select name="excel_handle" id="sel" onchange="window.location=this.value">
+                    <option value="">excel文件处理</option>
+                    <option value="http://127.0.0.1:8000/excel/data_visualization">数据可视化</option>
+                    <option value="http://127.0.0.1:5000/excel/split_merge">excel拆分合并表格</option>
+                </select>
+            </li>
+            <li class="process"><a href="http://127.0.0.1:8000/v1/downloads/localtool"><span></span>本地文件处理</a>
+            </li>
+            <li class="image"><a href="http://127.0.0.1:8000/v1/images/img"><span></span>图像处理</a>
+            </li>
+            <li class="search"><a href="http://127.0.0.1:8000/Mubanspider/get_search" id="search" target="_blank">模板搜索</a>
+            </li>
+        </ul>
+        
+        <!-- 登录注册退出 -->
+        <div id="d2">
+            <a href="/login" id="login" target="_blank">用户信息</a>
+            <a href="/c_register" id="register" target="_blank">企业管理</a>
+        </div>
+    </nav>
+</header>
+<!-- <div id="main"></div> -->
+<main>
+    <!-- <form action="" method="post">
+            <div class="search">
+                <label for="search">模板搜索</label>
+                <input name="wd" id="search" value="">
+            </div>
+            <div>
+                <input type="button" value="立即搜索" onclick="search()">
+            </div>
+        </form> -->
+    <div class="im"><img src="../static/images/25.jpg"></div>
+    <div>
+        <div class="banner">
+            <ul id="fader" class="fader">
+
+            </ul>
+        </div>
+        <ul class="toppic">
+            <li>
+                <a href="#">
+                    <i><img src="../static/images/1.jpg" alt=""></i>
+                </a>
+                <div>人工时智能时代到来</div>
+                <span>The time has come</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i><img src="../static/images/2.jpg" alt=""></i>
+                </a>
+                <div>紧跟时代潮流</div>
+                <span>Follow me</span>
+            </li>
+        </ul>
+    </div>
+    <!-- blank清除上方浮动的影响  同时调整距离 -->
+    <div class="blank"></div>
+    <div class="blogsbox">
+
+    </div>
+</main>
+<!-- <div id="footer"></div> -->
+<footer>
+    <div>
+        <a href="#">自动化办公就是so easy</a>
+        <a href="#">快来加入我们吧！</a>
+    </div>
+</footer>
+</body>
+
+</html>

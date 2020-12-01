@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>账户设置</title>
+  <!-- Meta Tags Begin -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <meta name="keywords" content=""> -->
+  <!-- <meta name="robots" content="index follow"> -->
+  <!-- <meta name="description" content=""> -->
+  <!-- Link tags begin -->
+  <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <script src="/static/js/jquery-1.11.3.js"> </script>
+</head>
+<body>
+  <!-- <div id="rel">
+    <div class="mobile-nav">
+      <i class="fa fa-times"> </i>
+      <ul>
+        <li class="port"><a href="#"> Portfolio </a> </li>
+        <li><a href="/about.html"> About </a> </li>
+        <li><a href="mailto:someone@someone.com"> Contact </a> </li>
+      </ul>
+    </div>
+  </div> -->
+
+  <div class="pos-fixed">
+    <div class="container">
+      <div class="logo"><a> <span id="name"></span> </a></div>
+      <div id="toggle">
+        <i class="fa fa-bars fa-2x"> </i>
+        </div>
+      <nav>
+        <ul>
+            <li class=""><a href=/index id="change_info" target="_blank"> 主页 </a> </li>
+          <li class=""><a href=/username/change_info id="change_info" target="_blank"> 个人资料 </a> </li>
+          <li class=""><a href="/username/change_password" id="change_password" target="_blank"> 账号设置 </a> </li>
+          <!-- <li class=""><a href="6"> 收藏 </a> </li> -->
+          <li class=""><a href="http://127.0.0.1:5000/c_register"> 关于企业 </a> </li>
+          <li class=""><a href="http://127.0.0.1:8000/robot/robot" target="_blank"> 帮助 </a> </li>
+<!--          <li class="port"><a href="#"> 中心 </a> </li>-->
+          <li class="port"><a href="/login" onclick="log_out"> 退出 </a> </li>
+
+        </ul>
+        </nav>
+      <!-- navigation end -->
+      <!-- end of container below -->
+      </div>
+    <!-- end of pos-fixed -->
+    </div>
+  <!-- begin header -->
+    <header>
+    <div class="header">
+<!--      <img src="/static/images/header-img-min.png">-->
+      <h1> 欢迎使用我们的自动化办公产品 </h1>
+      <p>尊敬的用户</p><br>
+      
+      <div class="button pos-button scroll-port"> 用户中心</div>
+      <!-- ends header below -->
+    </div>
+    </header>
+    <!-- end header -->
+    <!-- begin services section -->
+    <!-- <div class="tlinks">Collect from <a href="http://www.cssmoban.com/" >企业网站模板</a></div> -->
+    <section>
+    <div class="container">
+      <div class="services">
+        <h2> 简介 </h2>
+        <div class="bit-3">
+        <div class="responsive">
+          <img class="responsive-svg" src="/static/images/yukuaibangong02.jpg" >
+          <h4> 解放双手，放空自己 </h4>
+          </div>
+        <!-- closes responsive div - above -->
+        </div>
+
+        <!-- closes bit-3 div - above -->
+        <!-- Begin branding icon -->
+        <div class="bit-3">
+          <div class="branding">
+            <img class="branding-svg" src="/static/images/yukuaibangong01.jpg" >
+            <h4>简单入手</h4>
+            <!-- closes branding div - below -->
+        </div>
+        <!-- closes bit-3 div - below -->
+      </div>
+
+      <div class="bit-3">
+        <div class="digi-ad">
+          <img class="digi-ad-svg" src="/static/images/yukuaibangong03.jpg" >
+          <h4>一键自动</h4>
+        </div>
+      </div>
+    </section>
+    <section>
+
+    </section>
+    <section>
+      <div class="contact-cta">
+      <h2> 问题与反馈 </h2>
+      <p> 联系方式：xxxxxxx</p>
+      <div class="button home-contact">
+        <a href="mailto: someone@email.com"> 联系我们 </a>
+          </div>
+        </div>
+    </section>
+    <footer>
+
+    </footer>
+    <script src="/static/js/functions-min.js" async> </script>
+  </body>
+<script>
+    var url=location.href;
+    var num=url.indexOf('/') ;
+    var str=url.substr(num+1);
+    var arr=str.split('/');
+    //uname=arr[2];
+    uname = window.localStorage.getItem('OA_user');
+    var span=document.getElementById("name");
+    span.innerHTML=uname+'的用户中心'
+</script>
+</html>

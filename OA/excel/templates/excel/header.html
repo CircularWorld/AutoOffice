@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>办办-首页</title>
+    <link rel="stylesheet" href="/static/css/header.css">
+    <style>
+        select{
+            appearance:none;
+            -moz-appearance:none; /* Firefox */
+            -webkit-appearance:none; /* Safari 和 Chrome */
+             background-color: transparent;
+             border: 0px;
+            color: white;
+            line-height:82px;
+           /* padding: 0px; */
+        }
+
+
+    </style>
+</head>
+<body>
+<header>
+    <nav>
+        <!-- logo文字 -->
+        <h1><a href="#">办办欢迎您</a></h1>
+        <!-- 导航菜单 ul>li*6>a -->
+        <ul class="buttons">
+            <li class="talk"><a href="http://127.0.0.1:8000/v1/words"><span>
+                            </span>word文件处理</a>
+            </li>
+            <li class="excel"><span></span>
+                <select name="excel_handle" id="sel" onchange="window.location=this.value">
+                    <option value="">excel文件处理</option>
+                    <option value="http://127.0.0.1:8000/excel/data_visualization">数据可视化</option>
+                    <option value="http://127.0.0.1:5000/excel/split_merge">excel拆分合并表格</option>
+                </select>
+            </li>
+            <li class="process"><a href="http://127.0.0.1:8000/v1/downloads/localtool"><span></span>本地文件处理</a>
+            </li>
+            <li class="image"><a href="http://127.0.0.1:8000/v1/images/img"><span></span>图像处理</a>
+            </li>
+            <li class="search"><a href="http://127.0.0.1:8000/Mubanspider/get_search" id="search" target="_blank">模板搜索</a>
+            </li>
+        </ul>
+
+        <!-- 登录注册退出 -->
+        <!-- <div>
+            <a href="/login" id="login" target="_blank">登录</a>
+            <a href="/register" id="register" target="_blank">注册</a>
+        </div> -->
+    </nav>
+</header>
+{% block content %}
+<div></div>
+{% endblock %}
+</body>
+</html>

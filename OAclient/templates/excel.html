@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<link href="favicon.ico" rel="shortcut icon">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>拆分合并表格</title>
+    <script src="/static/js/jquery-1.11.3.js"></script>
+	<link rel="stylesheet" href="/static/css/excel.css">
+<!--	<link href="/static/css/bootstrap.css" rel="stylesheet">-->
+<!--	<script src="/static/js/bootstrap.js"></script>-->
+	<style>
+		.bg img{
+			position: fixed;
+			top:0;
+			width: 100%;
+			height:100%;
+			opacity: 0.6;
+			z-index: -100;
+		}
+
+	</style>
+	</head>
+	<body>
+		<!-- <div class="bg">
+				<img src="../static/images/c_login.jpg" alt="">
+		</div> -->
+		<div class="rootLayout">
+			
+			<div class="infoLayout">
+				<h1>Excel表格合并拆分</h1>
+			</div>
+			
+			<div class="contentWrapper">
+				<div class="rightLayout">
+					<a class="active ac1" href="#">
+						<div class="navText">
+              拆分
+						</div>
+					</a>
+					<a class="active ac2" href="#">
+						<div class="navText ">
+              合并
+						</div>
+					</a>
+					<!-- <a class="active ac3" href="#">
+						<div class="navText ">
+							水印
+						</div>
+					</a> -->
+
+				</div>
+
+				<div class="canvasLayout" >
+					<div id="output" class="well" style="width: 90%;margin: 50px;">
+						<h1>预览效果</h1>
+					</div>
+				</div>
+				<div class="floatToolPanel">
+					<div class="helperLayout">
+						<!-- <input type='button' id ='run_split_btn' value = '执行' /> <br /> -->
+					</div>
+					<!-- <div class="userUploadBtn">
+						<input id="upload" type="file" />
+					</div> -->
+					
+				</div>
+			</div>
+
+		</div>
+		<script type="text/javascript">
+			var help_html = ''
+			$(function() {
+				$('.ac1').click(function() {
+					console.log('拆分')
+					// alert(123)
+					help_html = ''
+					help_html += '<ul>'
+					help_html += '<li style="height:30px">'
+					help_html += '</li>'
+					help_html += '<li>'
+					help_html +=
+						"标题行数：<input type='text' id = 'title_line' placeholder='作为表头的所在行' /><br />"
+					help_html += '</li>'
+					help_html += '<li>'
+					help_html +=
+						"字段名称：<input type='text' id = 'split_type' placeholder='生成excel文件的名字' /><br />"
+					help_html += '</li>'
+					help_html += '<li>'
+					help_html+= '<input class="userUploadBtn" id="upload_excel" type="file" accept=".xlsx" />'
+					help_html += '</li>'
+					help_html += '<li>'
+					help_html +=
+						"<input type='button' id ='run_split_btn' value = '执行' /> <br />"
+					help_html += '</li>'
+					help_html += '<li><p>分割表格:上传excel表格文件,在上面(表头行数)输入表头所在行,在(字段列数)输入以表头中字段,作为拆分后的文件名</p>'
+					help_html += '</li>'
+					help_html += '</ul>'
+					$('.helperLayout').html(help_html)
+				})
+
+				$('.ac2').click(function() {
+					// alert(456)
+					help_html = ''
+					help_html += '<ul>'
+					help_html += '<li style="height:30px">'
+					help_html += '</li>'
+					help_html += '<li>'
+					help_html +=
+						"标题行数：<input type='text' id = 'title_line' placeholder='作为表头的所在行' /><br />"
+					help_html += '</li>'
+					help_html += '<li>'
+					help_html+= '<div class="userUploadBtn"><input id="upload_zip" type="file" accept=".zip" /></div>'
+					help_html += '</li>'
+					help_html += '<li>'
+					help_html +=
+						"<input type='button' id ='run_merge_btn' value = '执行' /> <br />"
+					help_html += '</li>'
+					// css太难了,太费时间,不是我的菜
+					help_html += '<li><p>合并表格:上传excel表格文件,在上面(表头行数)输入表头所在行,在(字段列数)输入以表头中字段,作为拆分后的文件名</p>'
+					help_html += '</li>'
+					help_html += '</ul>'
+					$('.helperLayout').html(help_html)
+				})
+				
+
+
+				$('.ac3').click(function() {
+					// alert(789)
+					help_html = ''
+					help_html += '文字：<input type="text" /><br />'
+					help_html += '字体：<select><option>111</option><option>222</option><option>333</option></select><br />'
+					help_html += '大小：<select><option>111</option><option>222</option><option>333</option></select><br />'
+					help_html += '颜色：<input type="color" /><br />'
+					$('.helperLayout').html(help_html)
+        		})
+				$('.helperLayout').on('click','#run_split_btn',function(){
+					console.log('执行')
+					console.log($('#title_line').val())
+        			console.log($('#split_type').val())
+        			
+        			console.log('执行end')
+					var file_data= new FormData()
+
+					if(!$('#upload_excel')[0].files[0]){
+						alert('请导入文件')
+					}
+					if(!$('#title_line').val()){
+						alert('请输入标头所在行')
+					}
+					
+					file_data.append('file',$('#upload_excel')[0].files[0]);
+					file_data.append('title_line',$('#title_line').val());
+					
+					file_data.append('split_type',$('#split_type').val())
+
+					//title_line
+					$.ajax({
+					  url:'http://127.0.0.1:8000/v1/excels/split',
+					  type:'post',
+					  data:file_data,
+					  contentType:false,
+					  processData: false,
+					  success:function(res){
+						// alert(res.code)
+						if(res.code==200){
+							alert('上传成功,预览信息')
+							excel_obj = res.data['lines_data']
+							//console.log('sssss',excel_obj)
+						    var html_tbody =''
+							html_tbody+='<table class="table table-striped table-bordered table-hover">'
+							html_tbody+= '<thead class="title">'
+							html_tbody+= '<tr>预览最多显示20行,<a href="http://'+res.data['zip_url']+'">请下载</a></tr>'
+							html_tbody+='<tbody>'
+							console.log(res.data['zip_url'])
+						// 处理 列表字段  [{} ,{}]
+						  for(var r =0 ;r<excel_obj.length;r++){
+								if(r>20){
+									break
+								}
+								console.log('>>>')
+								console.log(excel_obj[r])
+								//
+								html_tbody += '<tr>';
+
+								for (var item in excel_obj[r]){
+									console.log('item>>>')
+									console.log(excel_obj[r][item])
+									html_tbody += '<td>'+excel_obj[r][item]+'</td>';
+								}
+								html_tbody +='</tr>';
+
+							}
+							html_tbody+='</tbody>'
+							html_tbody+='</table>'
+							$('#output').html(html_tbody)
+						}else{
+						  alert(res.error);
+						}
+					  }
+				    }) // ajax end
+
+				})
+
+				$('.helperLayout').on('click','#run_merge_btn',function(){
+					console.log('执行')
+
+					var file_data= new FormData()
+
+					if(!$('#upload_zip')[0].files[0]){
+						alert('请导入文件')
+					}
+					if(!$('#title_line').val()){
+						alert('请输入标头所在行')
+					}
+
+					file_data.append('file',$('#upload_zip')[0].files[0]);
+					file_data.append('title_line',$('#title_line').val());
+					//title_line
+					$.ajax({
+					  url:'http://127.0.0.1:8000/v1/excels/merge',
+					  type:'post',
+					  data:file_data,
+					  contentType:false,
+					  processData: false,
+					  success:function(res){
+						// alert(res.code)
+						if(res.code==200){
+							alert('合并成功,预览信息')
+							excel_obj = res.data['lines_data']
+							//console.log('sssss',excel_obj)
+						    var html_tbody =''
+							html_tbody+='<table class="table table-striped table-bordered table-hover">'
+							html_tbody+= '<thead class="title">'
+							html_tbody+= '<tr>预览最多显示20行,<a href="http://'+res.data['zip_url']+'">请下载</a></tr>'
+							html_tbody+='<tbody>'
+							console.log(res.data['zip_url'])
+						// 处理 列表字段  [{} ,{}]
+						  for(var r =0 ;r<excel_obj.length;r++){
+								if(r>20){
+									break
+								}
+								console.log('>>>')
+								console.log(excel_obj[r])
+								//
+								html_tbody += '<tr>';
+
+								for (var item in excel_obj[r]){
+									console.log('item>>>')
+									console.log(excel_obj[r][item])
+									html_tbody += '<td>'+excel_obj[r][item]+'</td>';
+								}
+								html_tbody +='</tr>';
+
+							}
+							html_tbody+='</tbody>'
+							html_tbody+='</table>'
+							$('#output').html(html_tbody)
+						}else{
+						  alert(res.error);
+						}
+					  }
+				    }) // ajax end
+
+				})
+			
+				// 浏览文件上传到服务器，返回数据，进行预览
+				// $('#upload').change(function(){
+				  $('.helperLayout').on('change','#upload_excel',function(){
+				  console.log('导入文件后')
+				  // 获取文件
+				  var file_data= new FormData()
+				  file_data.append('file',$('#upload_excel')[0].files[0]);
+				  
+				  // console.log(file_data)
+				  $.ajax({
+					  url:'http://127.0.0.1:8000/v1/excels/upload_excel',
+					  type:'post',
+					  data:file_data,
+					  contentType:false,
+					  processData: false,
+					  success:function(res){
+						// alert(res.code)
+						if(res.code==200){
+							alert('上传成功,预览信息')
+							excel_obj = res.data['lines_data']
+							//console.log('sssss',excel_obj)
+						    var html_tbody =''
+							html_tbody+='<table class="table table-striped table-bordered table-hover">'
+							html_tbody+= '<thead class="title">'
+							html_tbody+= '<tr>预览最多显示20行</tr>'
+							html_tbody+='<tbody>'
+						// 处理 列表字段  [{} ,{}]
+						  for(var r =0 ;r<excel_obj.length;r++){
+								if(r>20){
+									break
+								}
+								console.log('>>>')
+								console.log(excel_obj[r])
+								//
+								html_tbody += '<tr>';
+
+								for (var item in excel_obj[r]){
+									console.log('item>>>')
+									console.log(excel_obj[r][item])
+									html_tbody += '<td>'+excel_obj[r][item]+'</td>';
+								}
+								html_tbody +='</tr>';
+
+							}
+							html_tbody+='</tbody>'
+							html_tbody+='</table>'
+							$('#output').html(html_tbody)
+						}else{
+						  alert(res.error);
+						}
+					  }
+				  }) // ajax end
+        		}) // $('#upload_excel') end
+
+				$('.helperLayout').on('change','#upload_zip',function(){
+				  console.log('导入文件后')
+				  // 获取文件
+				  var file_data= new FormData()
+				  file_data.append('file',$('#upload_zip')[0].files[0]);
+				  
+				  // console.log(file_data)
+				  $.ajax({
+					  url:'http://127.0.0.1:8000/v1/excels/upload_zip',
+					  type:'post',
+					  data:file_data,
+					  contentType:false,
+					  processData: false,
+					  success:function(res){
+						// alert(res.code)
+						if(res.code==200){
+							alert('上传成功')
+						}else{
+						  alert(res.error);
+						}
+					  }
+				  }) // ajax end
+        		}) // $('#upload') end
+			}) // function end
+		</script>
+		<!-- <script src="https://cdn.jsdelivr.net/npm/mammoth@1.4.8/mammoth.browser.min.js"></script> -->
+		<!-- <script src="js/demo.js"></script> -->
+	</body>
+</html>
